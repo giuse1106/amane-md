@@ -1,0 +1,65 @@
+import fetch from 'node-fetch';
+
+let handler = async (m, { conn, usedPrefix }) => {
+  // Costruisco il testo del menu owner in stile cosmic
+  let text = `
+🌌 𝕻𝖆𝖓𝖊𝖑𝖑𝖔 𝖈𝖔𝖘𝖒𝖎𝖈𝖔 𝖉𝖊𝖑𝖑'𝕺𝖜𝖓𝖊𝖗 🌌
+
+🚀 ${usedPrefix}𝖎𝖒𝖕𝖔𝖘𝖙𝖆𝖓𝖔𝖒𝖊  
+♻️ ${usedPrefix}𝖗𝖊𝖘𝖊𝖙𝖙𝖆𝖓𝖔𝖒𝖊  
+🌠 ${usedPrefix}𝖌𝖊𝖘𝖙𝖎𝖘𝖈𝖎 @  
+🪐 ${usedPrefix}𝖘𝖊𝖙𝖌𝖗𝖚𝖕𝖕𝖎  
+🌌 ${usedPrefix}𝖆𝖌𝖌𝖎𝖚𝖓𝖌𝖎𝖌𝖗𝖚𝖕𝖕𝖎 @  
+☄️ ${usedPrefix}𝖗𝖊𝖘𝖊𝖙𝖌𝖗𝖚𝖕𝖕𝖎 @  
+🖼️ ${usedPrefix}𝖘𝖊𝖙𝖕𝖕  
+🚫 ${usedPrefix}𝖇𝖆𝖓𝖚𝖘𝖊𝖗 @  
+🔓 ${usedPrefix}𝖚𝖓𝖇𝖆𝖓𝖚𝖘𝖊𝖗 @  
+🛑 ${usedPrefix}𝖇𝖑𝖔𝖈𝖐𝖚𝖘𝖊𝖗 @  
+✅ ${usedPrefix}𝖚𝖓𝖇𝖑𝖔𝖈𝖐𝖚𝖘𝖊𝖗 @  
+🧹 ${usedPrefix}𝖕𝖚𝖑𝖎𝖟𝖎𝖆  
+🚪 ${usedPrefix}𝖔𝖚𝖙  
+💠 ${usedPrefix}𝖕𝖗𝖊𝖋𝖎𝖘𝖘𝖔 (?)  
+♻️ ${usedPrefix}𝖗𝖊𝖘𝖊𝖙𝖙𝖆𝖕𝖗𝖊𝖋𝖎𝖘𝖘𝖔  
+🌟 ${usedPrefix}𝖌𝖔𝖉𝖒𝖔𝖉𝖊  
+➕ ${usedPrefix}𝖆𝖟𝖟𝖊𝖗𝖆 @  
+📈 ${usedPrefix}𝖆𝖌𝖌𝖎𝖚𝖓𝖌𝖎 [num] @  
+📉 ${usedPrefix}𝖗𝖎𝖒𝖚𝖔𝖛𝖎 [num] @  
+💥 ${usedPrefix}𝖋𝖑𝖔𝖔𝖉  
+🔥 ${usedPrefix}𝖓𝖚𝖐𝖊  
+👑 ${usedPrefix}𝖆𝖉𝖉𝖔𝖜𝖓𝖊𝖗 @  
+🗑️ ${usedPrefix}𝖉𝖊𝖑𝖔𝖜𝖓𝖊𝖗 @  
+📥 ${usedPrefix}𝖉𝖔𝖜𝖓𝖆𝖑𝖑  
+📤 ${usedPrefix}𝖚𝖕𝖆𝖑𝖑  
+🚫 ${usedPrefix}𝖇𝖑𝖔𝖈𝖐𝖑𝖎𝖘𝖙  
+🔒 ${usedPrefix}𝖇𝖆𝖓𝖑𝖎𝖘𝖙  
+🔊 ${usedPrefix}𝖇𝖎𝖌𝖙𝖆𝖌  
+🛡️ ${usedPrefix}𝖑𝖔𝖈𝖐  
+💎 ${usedPrefix}𝖘𝖆𝖋𝖊  
+🏷️ ${usedPrefix}𝖘𝖕𝖔𝖓𝖘𝖔𝖗  
+📦 ${usedPrefix}𝖌𝖊𝖙𝖕𝖑𝖚𝖌𝖎𝖓  
+🗂️ ${usedPrefix}𝖌𝖊𝖙𝖋𝖎𝖑𝖊  
+💾 ${usedPrefix}𝖘𝖆𝖛𝖊𝖕𝖑𝖚𝖌𝖎𝖓  
+🗑️ ${usedPrefix}𝖉𝖊𝖑𝖊𝖙𝖊𝖕𝖑𝖚𝖌𝖎𝖓  
+📝 ${usedPrefix}𝖓𝖔𝖒𝖊 <testo>  
+📖 ${usedPrefix}𝖇𝖎𝖔 <testo>  
+
+𝕻𝖔𝖜𝖊𝖗𝖊𝖉 𝖇𝖞 ✦ ＡＭＡＮＥ 星 ✦
+  `.trim();
+
+  // Optional: thumbnail image
+  let thumbnailUrl = 'https://qu.ax/cSqEs.jpg'; 
+  let thumbnailBuffer = await fetch(thumbnailUrl).then(res => res.buffer());
+
+  // Messaggio con foto + testo
+  await conn.sendMessage(m.chat, {
+    image: thumbnailBuffer,
+    caption: text,
+    mentions: conn.parseMention(text)
+  }, { quoted: m });
+};
+
+handler.help = ['owner', 'menuowner', 'pannello'];
+handler.tags = ['owner', 'menu'];
+handler.command = /^(owner|menuowner|pannello)$/i;
+
+export default handler;
